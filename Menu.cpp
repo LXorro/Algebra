@@ -82,9 +82,6 @@ int main() {
       cout << "\nY= " << static_cast<double>(determinanteY(Sys)) / determinanteSistema(Sys);
       cout << "\nZ= " << static_cast<double>(determinanteZ(Sys)) / determinanteSistema(Sys);
 
-
-
-//cout<< "\n X = " << determinanteX(Sys) << "/" << determinanteY(Sys) ; 
         break;
 
       case 7:
