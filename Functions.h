@@ -3,14 +3,14 @@
 #define FUNCTIONS_H
 
 //Default
-void mostrarEcuacion(int Sys[3][4]);
-void imprimirMatriz(int Sys[3][4]);
-int determinanteSistema (int Sys[3][4]);
+void mostrarEcuacion(int Sys[26][26]);
+void imprimirMatriz(int Sys[26][26]);
+int determinanteSistema (int Sys[26][26]);
 
-//Sarrus XYZ
-int determinanteX (int Sys[3][4]);
-int determinanteY (int Sys[3][4]);
-int determinanteZ (int Sys[3][4]);
+//Cramer XYZ
+int determinanteX (int Sys[26][26]);
+int determinanteY (int Sys[26][26]);
+int determinanteZ (int Sys[26][26]);
 
 
 

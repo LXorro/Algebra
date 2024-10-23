@@ -16,10 +16,28 @@ void imprimirMatriz(int Sys[3][4]) {
     }
 }
 
-int determinanteSistema (int Sys[3][4]){
-  int Det;
-  Det = Sys[0][0]*((Sys[1][1] * Sys[2][2]) - (Sys[1][2] * Sys[2][1])) -
-        Sys[0][1]*((Sys[1][0] * Sys[2][2]) - (Sys[1][2] * Sys[2][0])) +
-        Sys[0][2]*((Sys[1][0] * Sys[2][1]) - (Sys[1][1] * Sys[2][0]));
-return Det;
+double determinantesistema(double Sys[26][26], int T) {
+    double det = 0;
+
+    if (T == 1) {
+        return Sys[0][0];
+    } else if (T == 2) {
+        return Sys[0][0] * Sys[1][1] - Sys[0][1] * Sys[1][0];
+    } else {
+        double subSys[26][26];
+        for (int p = 0; p < T; p++) {
+            int subi = 0;  
+            for (int i = 1; i < T; i++) {
+                int subj = 0; 
+                for (int j = 0; j < T; j++) {
+                    if (j == p) continue;
+                    subSys[subi][subj] = Sys[i][j];
+                    subj++;
+                }
+                subi++;
+            }
+            det += Sys[0][p] * determinantesistema(subSys, T - 1) * (p % 2 == 0 ? 1 : -1);
+        }
+    }
+    return det;
 }

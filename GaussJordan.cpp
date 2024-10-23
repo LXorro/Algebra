@@ -2,7 +2,7 @@
 using namespace std;
 
 // Función para calcular el determinante de una matriz
-double determinante(double mat[10][10], int n) {
+double determinante(double mat[26][26], int n) {
     double det = 0;
 
     if (n == 1) {
@@ -10,7 +10,7 @@ double determinante(double mat[10][10], int n) {
     } else if (n == 2) {
         return mat[0][0] * mat[1][1] - mat[0][1] * mat[1][0];
     } else {
-        double subMat[10][10];  // Submatriz auxiliar para el cofactor
+        double subMat[26][26];  // Submatriz auxiliar para el cofactor
         for (int p = 0; p < n; p++) {
             int subi = 0;  // Índice de fila para submatriz
             for (int i = 1; i < n; i++) {
@@ -29,7 +29,7 @@ double determinante(double mat[10][10], int n) {
 }
 
 // Función para reemplazar una columna en la matriz de coeficientes con el vector de términos independientes
-void reemplazarColumna(double mat[10][10], double vec[10], double nuevaMat[10][10], int col, int n) {
+void reemplazarColumna(double mat[26][26], double vec[26], double nuevaMat[26][26], int col, int n) {
     // Copiar la matriz original
     for (int i = 0; i < n; i++) {
         for (int j = 0; j < n; j++) {
@@ -45,9 +45,9 @@ void reemplazarColumna(double mat[10][10], double vec[10], double nuevaMat[10][1
 
 int main() {
     int n;
-    double A[10][10];  // Matriz de coeficientes A (máximo 10x10)
-    double b[10];      // Vector de términos independientes
-    double Ai[10][10]; // Matriz modificada
+    double A[26][26];  // Matriz de coeficientes A (máximo 26x26)
+    double b[26];      // Vector de términos independientes
+    double Ai[26][26]; // Matriz modificada
 
     // Solicitar el número de ecuaciones y variables
     cout << "Ingrese el número de ecuaciones: ";
@@ -77,7 +77,7 @@ int main() {
     }
 
     // Calcular los determinantes de las matrices modificadas
-    double soluciones[10];  // Arreglo para almacenar las soluciones
+    double soluciones[26];  // Arreglo para almacenar las soluciones
     for (int i = 0; i < n; i++) {
         // Crear la matriz Ai reemplazando la columna i por el vector b
         reemplazarColumna(A, b, Ai, i, n);
