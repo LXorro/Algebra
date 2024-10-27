@@ -2,82 +2,211 @@
 #include "math.h"
 #include "Functions.h"
 #include "stdio.h"
+#include "Functions4.h"
+#include <complex>
 
 using namespace std;
+using Complex = complex<double>;
 
 int main() {
-
-  int Sys[26][26];
+  double Sys[26][26];
+  Complex CSys[26][26];
+  int Type;
   int T;
   int Method;
+  double A[25];
+  
+  
+do {
+        cout << "Ingrese el tamanio del sistema 3/4: ";
+        cin >> T;
+        cout << "1. Numeros normales \n2. Numeros complejos: ";
+        cin >> Type;
 
-  cout << "Ingrese el tamaño del sistema: ";
-  cin >> T;
+        if ((T != 3 && T != 4) || (Type != 1 && Type != 2)) {
+          
+          system("cls");
+            cout << "Valores incorrectos. Intente de nuevo." << endl;
+        }
+    } while ((T != 3 && T != 4) || (Type != 1 && Type != 2));
 
-  // Verificación básica de entrada
-  if (T <= 0 || T > 26) {
-      cout << "Tamaño del sistema inválido. Debe estar entre 1 y 26.\n";
-      return 1;
-  }
 
-  // Ingresar los coeficientes y variables independientes
-  for (size_t i = 0; i < T; i++) {
-      for (size_t j = 0; j <= T; j++) {
-          if (j < T) {
-              cout << "Ingrese el coeficiente " << char(j + 97) << " de la ecuación " << i + 1 << ": ";
-              cin >> Sys[i][j];
-          } else {
-              cout << "Ingrese la variable independiente de la ecuación " << i + 1 << ": ";
-              cin >> Sys[i][j];
+  switch (Type) {
+    case 1:  // Numeros normales
+
+      cout << "Ingrese el sistema de ecuaciones\n";
+      inSys(Sys, T);
+      cout << "\nSistema de ecuaciones ingresado:\n";
+      printEq(Sys, T);
+      cout << "\nLa matriz es:\n";
+      printMat(Sys, T);
+      cout << "\nIngrese el metodo a usar:";
+      cout << "\n 1. Reduccion\n 2. Igualacion\n 3. Sustitucion";
+      cout << "\n 4. Gauss\n 5. Gauss-Jordan\n 6. Cramer\n 7. Cofactores \n";
+      cin >> Method;
+
+      switch (T) {
+        case 3:
+          switch (Method) {
+            case 1:
+              // REDUCCION
+              break;
+            case 2:
+              // IGUALACION
+              break;
+            case 3:
+              // SUSTITUCION
+              break;
+            case 4:
+              // GAUSS
+              break;
+            case 5:
+              // GAUSS-JORDAN
+              break;
+            case 6:
+              // CRAMER
+
+              determinanteCramer(Sys,T);
+              cramer(Sys, A, T);
+
+
+              for (size_t i = 0; i < T-1; i++){
+                cout << char('a'+i) << " = " << A[i+1] << "\n";
+              }
+              cout << char('a'+T) << " = " << A[0] << "\n";
+              break;
+            case 7:
+              // COFACTORES
+              break;
+            default:
+              cout << "Metodo invalido\n";
+              break;
           }
+          break;
+
+        case 4:
+          switch (Method) {
+            case 1:
+              // REDUCCION4
+              break;
+            case 2:
+              // IGUALACION4
+              break;
+            case 3:
+              // SUSTITUCION4
+              break;
+            case 4:
+              // GAUSS4
+              break;
+            case 5:
+              // GAUSS-JORDAN4
+              break;
+            case 6:
+              // CRAMER4
+                            determinanteCramer(Sys,T);
+              cramer(Sys, A, T);
+
+
+              for (size_t i = 0; i < T-1; i++){
+                cout << char('a'+i) << " = " << A[i+1] << "\n";
+              }
+              cout << char('a'+T) << " = " << A[0] << "\n";
+              break;
+              break;
+            case 7:
+              // COFACTORES4
+              break;
+            default:
+              cout << "Metodo invalido\n";
+              break;
+          }
+          break;
+
+        default:
+          cout << "Tamano de sistema invalido\n";
+          break;
       }
-  }
-
-  // Mostrar menú para seleccionar el método
-  cout << "\n Ingrese el método a usar";
-  cout << "\n 1. Reducción" << "\n 2. Igualación" << "\n 3. Sustitución";
-  cout << "\n 4. Gauss" << "\n 5. Gauss-Jordan" << "\n 6. Cramer" << "\n 7. Cofactores \n";
-  cin >> Method;
-
-  switch (Method) {
-    case 1:
-        // Implementar Reducción
-        break;
-
+      break;
+/*-------------------------------------------COMPLEJOS-------------------------------------------------*/
     case 2:
-        // Implementar Igualación
-        break;
+      cout << "Ingrese el sistema de ecuaciones\n";
+      inCSys(CSys, T);
+      cout << "\nSistema de ecuaciones ingresado:\n";
+      printCEq(CSys, T);
+      cout << "\nLa matriz es:\n";
+      printMatC(CSys, T);
+      cout << "\nIngrese el metodo a usar:";
+      cout << "\n 1. Reduccion\n 2. Igualacion\n 3. Sustitucion";
+      cout << "\n 4. Gauss\n 5. Gauss-Jordan\n 6. Cramer\n 7. Cofactores \n";
+      cin >> Method;
 
-    case 3:
-        // Implementar Sustitución
-        break;
+      switch (T) {
+        case 3:
+          switch (Method) {
+            case 1:
+              // REDUCCION
+              break;
+            case 2:
+              // IGUALACION
+              break;
+            case 3:
+              // SUSTITUCION
+              break;
+            case 4:
+              // GAUSS
+              break;
+            case 5:
+              // GAUSS-JORDAN
+              break;
+            case 6:
+              break;
+            case 7:
+              // COFACTORES
+              break;
+            default:
+              cout << "Metodo invalido\n";
+              break;
+          }
+          break;
 
-    case 4:
-        // Implementar Gauss
-        break;
+        case 4:
+          switch (Method) {
+            case 1:
+              // REDUCCION4
+              break;
+            case 2:
+              // IGUALACION4
+              break;
+            case 3:
+              // SUSTITUCION4
+              break;
+            case 4:
+              // GAUSS4
+              break;
+            case 5:
+              // GAUSS-JORDAN4
+              break;
+            case 6:
+              // CRAMER4
+              break;
+            case 7:
+              // COFACTORES4
+              break;
+            default:
+              cout << "Metodo invalido\n";
+              break;
+          }
+          break;
 
-    case 5:
-        // Implementar Gauss-Jordan
-        break;
-
-    case 6:
-        // cout << "\nLa determinante del sistema es: " << determinanteSistema(Sys);
-        // cout << "\nLa determinante de X es: " << determinanteX(Sys);
-        // cout << "\nLa determinante de Y es: " << determinanteY(Sys);
-        // cout << "\nLa determinante de Z es: " << determinanteZ(Sys);
-
-        // cout << "\nX = " << static_cast<double>(determinanteX(Sys)) / determinanteSistema(Sys);
-        // cout << "\nY = " << static_cast<double>(determinanteY(Sys)) / determinanteSistema(Sys);
-        // cout << "\nZ = " << static_cast<double>(determinanteZ(Sys)) / determinanteSistema(Sys);
-        break;
-
-    case 7:
-        // Implementar Cofactores
-        break;
+        default:
+          cout << "Tamano de sistema invalido\n";
+          break;
+      }
+      break;
 
     default:
-        cout << "Opción inválida.\n";
-        break;
+      cout << "Tipo de sistema invalido\n";
+      break;
   }
 
   system("pause");

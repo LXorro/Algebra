@@ -1,43 +1,112 @@
 #include <iostream>
+#include <iomanip>
+#include <cmath>
 #include "Functions.h"
+#include <complex>
 
 using namespace std;
+using Complex = complex<double>;
 
 
-void mostrarEcuacion(int Sys[3][4]) {
-    for (size_t i = 0; i < 3; i++) {
-        cout << Sys[i][0] << "x + " << Sys[i][1] << "y + " << Sys[i][2] << "z = " << Sys[i][3] << '\n';
-    }
-}
 
-void imprimirMatriz(int Sys[3][4]) {
-    for (size_t i = 0; i < 3; i++) {
-        cout << Sys[i][0] << "  " << Sys[i][1] << "  " << Sys[i][2] << '\n';
-    }
-}
 
-double determinantesistema(double Sys[26][26], int T) {
-    double det = 0;
+// Funcion para ngresar los coeficientes y variables independientes
+void inSys (double Sys [26][26],int T){
+        for (size_t i = 0; i < T; i++) {
+        for (size_t j = 0; j <= T; j++) {
+              if (j < T) {
+                cout << "Ingrese el coeficiente " << char(j + 97) << " de la ecuacion " << i + 1 << ": ";
+                cin >> Sys[i][j];
+              } else {
+                cout << "Ingrese la variable independiente de la ecuacion " << i + 1 << ": ";
+                cin >> Sys[i][j];
+             }
+         }
+     }
+  }
 
-    if (T == 1) {
-        return Sys[0][0];
-    } else if (T == 2) {
-        return Sys[0][0] * Sys[1][1] - Sys[0][1] * Sys[1][0];
-    } else {
-        double subSys[26][26];
-        for (int p = 0; p < T; p++) {
-            int subi = 0;  
-            for (int i = 1; i < T; i++) {
-                int subj = 0; 
-                for (int j = 0; j < T; j++) {
-                    if (j == p) continue;
-                    subSys[subi][subj] = Sys[i][j];
-                    subj++;
+//Imprime la ecuacion
+void printEq(double Sys[26][26], int T) {
+    for (size_t i = 0; i < T; i++) { 
+        for (size_t j = 0; j < T; j++) {
+            if (Sys[i][j] >= 0) {  // Si el número es positivo
+                if (j == 0) {  // Si es el primer coeficiente no se imprime con signo
+                    cout << " " << Sys[i][j] << char(j + 'w');
+                } else {  // Si no es el primero, se imprime con un +
+                    cout << " +" << Sys[i][j] << char(j + 'w');
                 }
-                subi++;
+            } else {  // Si el número no es positivo
+                if (j == 0) {  // Si es el primer coeficiente, se imprime sin signo a la izquierda
+                    cout << " " << Sys[i][j] << char(j + 'w');
+                } else {  // Si no es el primero, se imprime el valor tal cual (con su signo)
+                    cout << " " << Sys[i][j] << char(j + 'w');
+                }
             }
-            det += Sys[0][p] * determinantesistema(subSys, T - 1) * (p % 2 == 0 ? 1 : -1);
+        }
+        // Imprime el término independiente en ultima columna (T)
+        cout << " = " << Sys[i][T];
+        cout << endl;
+    }
+}
+
+
+//Imrpimir matriz
+void printMat(double Sys[26][26], int T) {
+    for (size_t i = 0; i < T; i++) {
+        for (size_t j = 0; j < T; j++) { // Se fija un ancho de 8 caracteres para cada número con setw
+            cout << setw(8) << Sys[i][j] << " ";
+        }
+        cout << "| " << setw(8) << Sys[i][T];
+        cout << endl;
+    }
+}
+
+/*---------------------------------------------------------------------------Complejos---------------------------------------------------------------------------*/
+
+// Funcion para ingresar los coeficientes y variables independientes como números complejos
+void inCSys(Complex Sys[26][26], int T) {
+    for (size_t i = 0; i < T; i++) {
+        for (size_t j = 0; j <= T; j++) {
+            double real, imag;
+            if (j < T) {
+                cout << "Ingrese la parte real del coeficiente " << char(j + 97) << " de la ecuacion " << i + 1 << ": ";
+                cin >> real;
+                cout << "Ingrese la parte imaginaria del coeficiente " << char(j + 97) << " de la ecuacion " << i + 1 << ": ";
+                cin >> imag;
+                Sys[i][j] = Complex(real, imag);
+            } else {
+                cout << "Ingrese la parte real de la variable independiente de la ecuacion " << i + 1 << ": ";
+                cin >> real;
+                cout << "Ingrese la parte imaginaria de la variable independiente de la ecuacion " << i + 1 << ": ";
+                cin >> imag;
+                Sys[i][j] = Complex(real, imag);
+            }
         }
     }
-    return det;
+}
+
+// Función para imprimir el sistema de ecuaciones con números complejos
+void printCEq(Complex Sys[26][26], int T) {
+    for (size_t i = 0; i < T; i++) { 
+        for (size_t j = 0; j < T; j++) {
+            if (j != 0) {
+                cout << " + ";
+            }
+            cout << "(" << Sys[i][j].real() << ", " << Sys[i][j].imag() << "i)" << char(j + 'w');
+        }
+        // Imprime el término independiente (última columna)
+        cout << " = (" << Sys[i][T].real() << ", " << Sys[i][T].imag() << "i)";
+        cout << endl;
+    }
+}
+
+// Función para imprimir la matriz del sistema con números complejos
+void printMatC(Complex Sys[26][26], int T) {
+    for (size_t i = 0; i < T; i++) {
+        for (size_t j = 0; j < T; j++) {
+            cout << setw(12) << "(" << Sys[i][j].real() << ", " << Sys[i][j].imag() << "i) ";
+        }
+        cout << "| " << setw(12) << "(" << Sys[i][T].real() << ", " << Sys[i][T].imag() << "i)";
+        cout << endl;
+    }
 }
