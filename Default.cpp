@@ -3,6 +3,8 @@
 #include <cmath>
 #include "Functions.h"
 #include <complex>
+#include <string>
+#include <sstream>
 
 using namespace std;
 using Complex = complex<double>;
@@ -11,19 +13,32 @@ using Complex = complex<double>;
 
 
 // Funcion para ngresar los coeficientes y variables independientes
-void inSys (double Sys [26][26],int T){
-        for (size_t i = 0; i < T; i++) {
+void inSys(double Sys[26][26], int T) {
+    for (size_t i = 0; i < T; i++) {
         for (size_t j = 0; j <= T; j++) {
-              if (j < T) {
-                cout << "Ingrese el coeficiente " << char(j + 97) << " de la ecuacion " << i + 1 << ": ";
-                cin >> Sys[i][j];
-              } else {
-                cout << "Ingrese la variable independiente de la ecuacion " << i + 1 << ": ";
-                cin >> Sys[i][j];
-             }
-         }
-     }
-  }
+            string input;
+            cout << "Ingrese el ";
+            if (j < T) {
+                cout << "coeficiente " << char(j + 97) << " de la ecuacion " << i + 1 << ": ";
+            } else {
+                cout << "variable independiente de la ecuacion " << i + 1 << ": ";
+            }
+            cin >> input;
+
+            // Procesar entrada para detectar y convertir fracción
+            size_t pos = input.find('/');
+            if (pos != string::npos) {
+                // Si encuentra '/', asume que es una fracción
+                double numerador = stod(input.substr(0, pos));
+                double denominador = stod(input.substr(pos + 1));
+                Sys[i][j] = numerador / denominador;
+            } else {
+                // Si no hay '/', convierte el número directamente
+                Sys[i][j] = stod(input);
+            }
+        }
+    }
+}
 
 //Imprime la ecuacion
 void printEq(double Sys[26][26], int T) {
@@ -67,18 +82,36 @@ void printMat(double Sys[26][26], int T) {
 void inCSys(Complex Sys[26][26], int T) {
     for (size_t i = 0; i < T; i++) {
         for (size_t j = 0; j <= T; j++) {
+            string inputReal, inputImag;
             double real, imag;
+
             if (j < T) {
+                // Entrada de la parte real del coeficiente
                 cout << "Ingrese la parte real del coeficiente " << char(j + 97) << " de la ecuacion " << i + 1 << ": ";
-                cin >> real;
+                cin >> inputReal;
+                real = (inputReal.find('/') != string::npos) ? 
+                    stod(inputReal.substr(0, inputReal.find('/'))) / stod(inputReal.substr(inputReal.find('/') + 1)) : stod(inputReal);
+
+                // Entrada de la parte imaginaria del coeficiente
                 cout << "Ingrese la parte imaginaria del coeficiente " << char(j + 97) << " de la ecuacion " << i + 1 << ": ";
-                cin >> imag;
+                cin >> inputImag;
+                imag = (inputImag.find('/') != string::npos) ? 
+                    stod(inputImag.substr(0, inputImag.find('/'))) / stod(inputImag.substr(inputImag.find('/') + 1)) : stod(inputImag);
+
                 Sys[i][j] = Complex(real, imag);
             } else {
+                // Entrada de la parte real de la variable independiente
                 cout << "Ingrese la parte real de la variable independiente de la ecuacion " << i + 1 << ": ";
-                cin >> real;
+                cin >> inputReal;
+                real = (inputReal.find('/') != string::npos) ? 
+                    stod(inputReal.substr(0, inputReal.find('/'))) / stod(inputReal.substr(inputReal.find('/') + 1)) : stod(inputReal);
+
+                // Entrada de la parte imaginaria de la variable independiente
                 cout << "Ingrese la parte imaginaria de la variable independiente de la ecuacion " << i + 1 << ": ";
-                cin >> imag;
+                cin >> inputImag;
+                imag = (inputImag.find('/') != string::npos) ? 
+                    stod(inputImag.substr(0, inputImag.find('/'))) / stod(inputImag.substr(inputImag.find('/') + 1)) : stod(inputImag);
+
                 Sys[i][j] = Complex(real, imag);
             }
         }
