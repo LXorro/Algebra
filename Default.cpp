@@ -11,7 +11,6 @@ using Complex = complex<double>;
 
 
 
-
 // Funcion para ngresar los coeficientes y variables independientes
 void inSys(double Sys[26][26], int T) {
     for (size_t i = 0; i < T; i++) {
