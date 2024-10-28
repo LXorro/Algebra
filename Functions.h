@@ -25,7 +25,8 @@ void printMatC(Complex Sys[26][26], int T);
 
 
 //Cramer 3i
-
+Complex determinanteCCramer(Complex matrix[26][26], int n);
+void cramerC(Complex Sys[26][26], Complex solutions[25], int n);
 
 
 

@@ -31,15 +31,15 @@ void printEq(double Sys[26][26], int T) {
         for (size_t j = 0; j < T; j++) {
             if (Sys[i][j] >= 0) {  // Si el número es positivo
                 if (j == 0) {  // Si es el primer coeficiente no se imprime con signo
-                    cout << " " << Sys[i][j] << char(j + 'w');
+                    cout << " " << Sys[i][j] << char(j + 'a');
                 } else {  // Si no es el primero, se imprime con un +
-                    cout << " +" << Sys[i][j] << char(j + 'w');
+                    cout << " +" << Sys[i][j] << char(j + 'a');
                 }
             } else {  // Si el número no es positivo
                 if (j == 0) {  // Si es el primer coeficiente, se imprime sin signo a la izquierda
-                    cout << " " << Sys[i][j] << char(j + 'w');
+                    cout << " " << Sys[i][j] << char(j + 'a');
                 } else {  // Si no es el primero, se imprime el valor tal cual (con su signo)
-                    cout << " " << Sys[i][j] << char(j + 'w');
+                    cout << " " << Sys[i][j] << char(j + 'a');
                 }
             }
         }
@@ -92,7 +92,7 @@ void printCEq(Complex Sys[26][26], int T) {
             if (j != 0) {
                 cout << " + ";
             }
-            cout << "(" << Sys[i][j].real() << ", " << Sys[i][j].imag() << "i)" << char(j + 'w');
+            cout << "(" << Sys[i][j].real() << ", " << Sys[i][j].imag() << "i)" << char(j + 'a');
         }
         // Imprime el término independiente (última columna)
         cout << " = (" << Sys[i][T].real() << ", " << Sys[i][T].imag() << "i)";
