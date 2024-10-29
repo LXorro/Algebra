@@ -2,13 +2,13 @@
 #include "math.h"
 #include "Functions.h"
 #include "stdio.h"
-#include "Functions4.h"
 #include <complex>
 
 using namespace std;
 using Complex = complex<double>;
 
 int main() {
+  system("Color 17");
   double Sys[26][26];
   Complex CSys[26][26];
   int Type;
@@ -71,6 +71,12 @@ switch (Type) {
         break;
       case 7:
         // COFACTORES
+        determinanteCofactores(Sys,T);
+        cofactores(Sys,A,T);
+        cout << char('a') << " = " << A[0] << "\n";
+        for (size_t i = 0; i < T - 1; i++) {
+          cout << char('b' + i) << " = " << A[i + 1] << "\n";
+        }
         break;
       default:
         cout << "Metodo Invalido";

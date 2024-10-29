@@ -14,6 +14,11 @@ double determinanteCramer(double Sys[26][26], int T);;
 void cramer(double Sys[26][26], double solutions[25], int T);
 
 
+//Cofactores
+double determinanteCofactores(double matrix[26][26], int n);
+void cofactores(double Sys[26][26], double solutions[25], int n);
+
+
 /*----------------------Complejos-----------------------*/
 
 //Defaulti
