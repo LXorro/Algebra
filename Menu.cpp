@@ -3,9 +3,12 @@
 #include "Functions.h"
 #include "stdio.h"
 #include <complex>
+#include <string>
+#include <sstream>
 
 using namespace std;
 using Complex = complex<double>;
+
 
 int main() {
   system("Color 17");
@@ -16,6 +19,8 @@ int main() {
   int Method;
   double A[25];
   Complex AC[25];
+  string SysStr [26][26];
+  string SysCStr [26][26];
 
   
 do {
@@ -34,11 +39,11 @@ do {
 switch (Type) {
   case 1:
     cout << "Ingrese el sistema de ecuaciones\n";
-    inSys(Sys, T);
+    inSys(Sys, SysStr, T);
     cout << "\nSistema de ecuaciones ingresado:\n";
-    printEq(Sys, T);
+    printEq(Sys, SysStr, T);
     cout << "\nLa matriz es:\n";
-    printMat(Sys, T);
+    printMat(SysStr, T);
     cout << "\nIngrese el metodo a usar:";
     cout << "\n 1. Reduccion\n 2. Igualacion\n 3. Sustitucion";
     cout << "\n 4. Gauss\n 5. Gauss-Jordan\n 6. Cramer\n 7. Cofactores \n";
@@ -71,12 +76,12 @@ switch (Type) {
         break;
       case 7:
         // COFACTORES
-        determinanteCofactores(Sys,T);
-        cofactores(Sys,A,T);
-        cout << char('a') << " = " << A[0] << "\n";
-        for (size_t i = 0; i < T - 1; i++) {
-          cout << char('b' + i) << " = " << A[i + 1] << "\n";
-        }
+        // determinanteCofactores(Sys,T);
+        // cofactores(Sys,A,T);
+        // cout << char('a') << " = " << A[0] << "\n";
+        // for (size_t i = 0; i < T - 1; i++) {
+        //   cout << char('b' + i) << " = " << A[i + 1] << "\n";
+        // }
         break;
       default:
         cout << "Metodo Invalido";
@@ -86,11 +91,11 @@ switch (Type) {
 
   case 2:
     cout << "Ingrese el sistema de ecuaciones complejos\n";
-    inCSys(CSys, T);
+    inCSys(CSys, SysCStr, T);
     cout << "\nSistema de ecuaciones ingresado:\n";
-    printCEq(CSys, T);
+    printCEq(CSys, SysCStr, T);
     cout << "\nLa matriz es:\n";
-    printMatC(CSys, T);
+    printMatC(SysCStr, T);
     cout << "\nIngrese el metodo a usar:";
     cout << "\n 1. Reduccion\n 2. Igualacion\n 3. Sustitucion";
     cout << "\n 4. Gauss\n 5. Gauss-Jordan\n 6. Cramer\n 7. Cofactores \n";
@@ -138,3 +143,5 @@ switch (Type) {
 system("pause");
 return 0;
 }
+
+
